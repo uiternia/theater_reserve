@@ -18,7 +18,6 @@ return new class extends Migration
             $table->string('name');
             $table->text('information');
             $table->integer('max_people');
-            $table->integer('price');
             $table->string('image')->nullable();
             $table->datetime('start_date');
             $table->datetime('end_date');

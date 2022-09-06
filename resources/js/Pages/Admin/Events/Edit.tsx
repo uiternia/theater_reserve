@@ -3,43 +3,15 @@ import { Head, Link, useForm, usePage } from "@inertiajs/inertia-react";
 import Authenticated from "@/Layouts/AdminAuthenticated";
 import { getToday, timeSelect } from "@/Common/Time";
 import ValidationErrors from "@/Components/ValidationErrors";
-import { HiOutlinePlusSm } from "react-icons/hi";
 import { FlashMessage } from "@/Components/FlashMessage";
+import { RiSendPlaneLine } from "react-icons/ri";
 
-export default function Create(props: any) {
+export default function Edit(props: any) {
     useEffect(() => {
-        data.date = getToday();
-        data.start_time = "10:00:00";
-        data.end_time = "11:00:00";
+        setValue(props.event.image);
     }, []);
 
-    const time = timeSelect();
-
-    //formメソッド
-    const { data, setData, post, errors, processing } = useForm({
-        name: "",
-        max_people: "",
-        information: "",
-        image: "",
-        date: "",
-        start_time: "",
-        end_time: "",
-    });
-
-    const startTimeChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-        const value = event.target.value;
-        setData("start_time", value);
-    };
-
-    const endTimeChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-        const value = event.target.value;
-        setData("end_time", value);
-    };
-
-    function onSubmit(e: any) {
-        e.preventDefault();
-        post(route("admin.events.store"));
-    }
+    // const time = timeSelect();
 
     //image表示メソッド
     const [value, setValue] = useState("");
@@ -55,6 +27,20 @@ export default function Create(props: any) {
             reader.readAsDataURL(file);
         }
     };
+
+    //formメソッド
+    const { data, setData, put, errors, processing } = useForm({
+        name: props.event.name || "",
+        max_people: props.event.max_people || "",
+        information: props.event.information || "",
+        image: "",
+    });
+
+    function onSubmit(e: any) {
+        e.preventDefault();
+        put(route("admin.events.update", props.event.id));
+    }
+
     return (
         <Authenticated
             auth={props.auth}
@@ -161,76 +147,16 @@ export default function Create(props: any) {
                                             alt=""
                                         />
                                     </div>
-                                    <div className="relative">
-                                        <label
-                                            htmlFor="date"
-                                            className="leading-7 text-sm text-gray-600"
-                                        >
-                                            イベント日付
-                                        </label>
-                                        <input
-                                            type="date"
-                                            id="date"
-                                            name="date"
-                                            value={data.date}
-                                            onChange={(e) =>
-                                                setData("date", e.target.value)
-                                            }
-                                            className="w-full mb-6 bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
-                                        />
-                                    </div>
                                 </div>
 
-                                <div className="grid md:grid-cols-2 md:gap-6">
-                                    <div className="relative z-0 mb-6 w-full group">
-                                        <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">
-                                            開始時間
-                                        </label>
-                                        <select
-                                            onChange={startTimeChange}
-                                            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                        >
-                                            {time.map((t, index) => {
-                                                return (
-                                                    <option
-                                                        key={index}
-                                                        value={t}
-                                                    >
-                                                        {t}
-                                                    </option>
-                                                );
-                                            })}
-                                        </select>
-                                    </div>
-                                    <div className="relative z-0 mb-6 w-full group">
-                                        <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">
-                                            終了時間
-                                        </label>
-                                        <select
-                                            onChange={endTimeChange}
-                                            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                        >
-                                            {time.map((t, index) => {
-                                                return (
-                                                    <option
-                                                        key={index}
-                                                        value={t}
-                                                    >
-                                                        {t}
-                                                    </option>
-                                                );
-                                            })}
-                                        </select>
-                                    </div>
-                                </div>
                                 <div className="mt-4 flex justify-center">
                                     <button
                                         disabled={processing}
                                         type="submit"
                                         className="text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                                     >
-                                        イベント追加
-                                        <HiOutlinePlusSm className="w-6 h-6"></HiOutlinePlusSm>
+                                        編集
+                                        <RiSendPlaneLine className="w-6 h-6"></RiSendPlaneLine>
                                     </button>
                                 </div>
                             </form>

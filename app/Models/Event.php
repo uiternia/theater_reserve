@@ -13,7 +13,6 @@ class Event extends Model
         'name',
         'information',
         'max_people',
-        'price',
         'image',
         'start_date',
         'end_date',
