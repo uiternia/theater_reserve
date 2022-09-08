@@ -6,21 +6,14 @@ use App\Http\Requests\StoreEventsRequest;
 use App\Http\Requests\UpdateEventsRequest;
 use App\Models\Event;
 use Inertia\Inertia;
-use App\Service\ImageService;
 use App\Service\EventService;
-use Carbon\Carbon;
-use Illuminate\Support\Facades\DB;
 
 class EventController extends Controller
 {
 
     public function index()
     {
-        $today = Carbon::today();
-
-        $events = DB::table('events')->whereDate('start_date', '>=', $today)
-            ->orderBy('start_date', 'asc')
-            ->paginate(50);
+        $events = Event::eventAll()->paginate(50);
 
         return Inertia::render('Admin/Events/Index', ['events' => $events]);
     }
@@ -45,39 +38,39 @@ class EventController extends Controller
         $startDate = EventService::joinDateAndTime($request['date'], $request['start_time']);
         $endDate = EventService::joinDateAndTime($request['date'], $request['end_time']);
 
-        //requestイメージのintervention storageへ保存
-        $image = $request->image;
-        if (!is_null($image) && $image->isValid()) {
-            $fileNameToStore = ImageService::upload($image);
-        }
-
         Event::create([
             'name' => $request['name'],
             'information' => $request['information'],
-            'image' => $fileNameToStore,
+            'image_id' => $request->image_id,
             'start_date' => $startDate,
             'end_date' => $endDate,
             'max_people' => $request['max_people'],
         ]);
-        return Inertia::render('Admin/Events/Index')->with($request->session()->flash('message', 'イベントの作成が完了しました'));
+        return to_route('admin.events.index')->with($request->session()->flash('message', 'イベントの作成が完了しました'));
     }
 
     public function show(Event $event)
     {
-        return Inertia::render('Admin/Events/Show', ['event' => $event]);
-    }
+        $eventShow = Event::eventImage($event->id)->first();
 
+        return Inertia::render('Admin/Events/Show', ['event' => $eventShow]);
+    }
 
     public function edit(Event $event)
     {
-        return Inertia::render('Admin/Events/Edit', ['event' => $event]);
-    }
+        $eventShow = Event::eventImage($event->id)->first();
 
+        return Inertia::render('Admin/Events/Edit', ['event' => $eventShow]);
+    }
 
     public function update(UpdateEventsRequest $request, Event $event)
     {
-        //悲しい
-        dd($event, $request);
+        $event->name = $request->name;
+        $event->information = $request->information;
+        $event->max_people = $request->max_people;
+        $event->image_id = $request->image_id;
+        $event->save();
+        return to_route('admin.events.index')->with($request->session()->flash('message', 'イベントを編集しました。'));
     }
 
 

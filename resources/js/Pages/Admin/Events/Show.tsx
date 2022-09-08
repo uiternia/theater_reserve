@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Head } from "@inertiajs/inertia-react";
 import Authenticated from "@/Layouts/AdminAuthenticated";
 import dayjs from "dayjs";
@@ -9,6 +9,7 @@ export default function Show(props: any) {
     const editEvent = (id: number) => {
         Inertia.get(route("admin.events.edit", id));
     };
+    const noImage = "/storage/images/no_image.jpg";
     return (
         <Authenticated
             auth={props.auth}
@@ -29,14 +30,17 @@ export default function Show(props: any) {
                                 <div className="container m-auto px-6 text-gray-600 md:px-12 xl:px-6">
                                     <div className="space-y-6 md:space-y-0 lg:flex md:gap-6 lg:items-center lg:gap-12">
                                         <div className="mb-3 md:5/12 lg:w-5/12">
-                                            <img
-                                                className="rounded-lg"
-                                                src={props.event.image}
-                                                alt="image"
-                                                loading="lazy"
-                                                width=""
-                                                height=""
-                                            />
+                                            {props.event.image === null ? (
+                                                <img
+                                                    src={noImage}
+                                                    className="object-cover rounded-2xl "
+                                                ></img>
+                                            ) : (
+                                                <img
+                                                    src={props.event.image}
+                                                    className="object-cover rounded-2xl "
+                                                ></img>
+                                            )}
                                         </div>
 
                                         <div className="md:6/12 lg:w-6/12">

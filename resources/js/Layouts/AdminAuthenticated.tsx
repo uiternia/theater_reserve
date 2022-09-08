@@ -22,12 +22,12 @@ export default function Authenticated({ auth, header, children }: Props) {
                     <div className="flex justify-between h-16">
                         <div className="flex">
                             <div className="shrink-0 flex items-center">
-                                <Link href="/">
+                                <Link href="/admin/dashboard">
                                     <ApplicationLogo className="block h-9 w-auto text-gray-500" />
                                 </Link>
                             </div>
 
-                            <div className="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                            <div className="font-mono	 hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                                 <NavLink
                                     href={route("admin.dashboard")}
                                     active={route().current("admin.dashboard")}
@@ -42,12 +42,20 @@ export default function Authenticated({ auth, header, children }: Props) {
                                 >
                                     演目一覧
                                 </NavLink>
+                                <NavLink
+                                    href={route("admin.images.index")}
+                                    active={route().current(
+                                        "admin.images.index"
+                                    )}
+                                >
+                                    画像管理
+                                </NavLink>
                             </div>
                         </div>
 
                         <div className="hidden sm:flex sm:items-center sm:ml-6">
                             <div className="ml-3 relative">
-                                <Dropdown>
+                                {/* <Dropdown>
                                     <Dropdown.Trigger>
                                         <span className="inline-flex rounded-md">
                                             <button
@@ -81,7 +89,14 @@ export default function Authenticated({ auth, header, children }: Props) {
                                             ログアウト
                                         </Dropdown.Link>
                                     </Dropdown.Content>
-                                </Dropdown>
+                                </Dropdown> */}
+                                <Dropdown.Link
+                                    href={route("admin.logout")}
+                                    method="post"
+                                    as="button"
+                                >
+                                    ログアウト
+                                </Dropdown.Link>
                             </div>
                         </div>
 
@@ -139,13 +154,19 @@ export default function Authenticated({ auth, header, children }: Props) {
                             href={route("admin.dashboard")}
                             active={route().current("admin.dashboard")}
                         >
-                            Dashboard
+                            売上管理
                         </ResponsiveNavLink>
                         <ResponsiveNavLink
                             href={route("admin.events.index")}
                             active={route().current("admin.events.index")}
                         >
-                            Dashboard
+                            イベント一覧
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink
+                            href={route("admin.images.index")}
+                            active={route().current("admin.images.index")}
+                        >
+                            画像管理
                         </ResponsiveNavLink>
                     </div>
 

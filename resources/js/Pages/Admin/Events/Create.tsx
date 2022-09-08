@@ -1,10 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { Head, Link, useForm, usePage } from "@inertiajs/inertia-react";
 import Authenticated from "@/Layouts/AdminAuthenticated";
 import { getToday, timeSelect } from "@/Common/Time";
 import ValidationErrors from "@/Components/ValidationErrors";
 import { HiOutlinePlusSm } from "react-icons/hi";
 import { FlashMessage } from "@/Components/FlashMessage";
+import ImageModal from "@/Components/ImageModal";
+
+interface Image {
+    id: string;
+    image: string;
+}
 
 export default function Create(props: any) {
     useEffect(() => {
@@ -20,7 +26,7 @@ export default function Create(props: any) {
         name: "",
         max_people: "",
         information: "",
-        image: "",
+        image_id: "",
         date: "",
         start_time: "",
         end_time: "",
@@ -36,40 +42,31 @@ export default function Create(props: any) {
         setData("end_time", value);
     };
 
+    //関数をImageModal.tsxに渡しそれを子側で渡し受け取る関数
+    const selectImage = (i: Image) => {
+        console.log(i);
+        setData("image_id", i.id);
+    };
+
     function onSubmit(e: any) {
         e.preventDefault();
         post(route("admin.events.store"));
     }
 
-    //image表示メソッド
-    const [value, setValue] = useState("");
-    //any -> React.ChangeEvent<HTMLInputElement>
-    const onChangeInputFile = (e: any) => {
-        if (e.target.files && e.target.files[0]) {
-            setData("image", e.target.files[0]);
-            const file = e.target.files[0];
-            const reader = new FileReader();
-            reader.onload = (e: any) => {
-                setValue(e.target.result);
-            };
-            reader.readAsDataURL(file);
-        }
-    };
     return (
         <Authenticated
             auth={props.auth}
             header={
-                <h2 className="font-semibold text-xl text-gray-800 leading-tight">
-                    新規イベント作成
+                <h2 className="font-mono font-medium text-xl text-gray-800 leading-tight">
+                    新規イベント
                 </h2>
             }
         >
-            <Head title="Event" />
-
-            <ValidationErrors errors={errors} />
+            <Head title="演目作成" />
 
             <div className="py-12">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
+                    <ValidationErrors errors={errors} />
                     <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                         <FlashMessage />
                         <div className="p-16 bg-white border-b border-gray-200">
@@ -136,31 +133,18 @@ export default function Create(props: any) {
                                         className="block p-4 w-full text-gray-900 bg-gray-50 rounded-lg border border-gray-300 sm:text-md focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                     />
                                 </div>
-                                <label
-                                    className="block mb-2 text-sm font-medium text-gray-500 dark:text-gray-300"
-                                    htmlFor="image"
-                                >
-                                    イベント画像
-                                </label>
-                                <div>
-                                    <label className="image">
-                                        <span className="sr-only">
-                                            ファイル選択
-                                        </span>
-                                        <input
-                                            type="file"
-                                            accept="image/*"
-                                            onChange={onChangeInputFile}
-                                            className="image w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
-                                        />
+                                <div className="flex justify-center">
+                                    <label
+                                        className=" block mb-2 text-sm font-medium text-gray-500 dark:text-gray-300"
+                                        htmlFor="image"
+                                    >
+                                        イベント画像
                                     </label>
-                                    <div>
-                                        <img
-                                            className="my-3 rounded-lg"
-                                            src={value}
-                                            alt=""
-                                        />
-                                    </div>
+                                </div>
+                                <ImageModal
+                                    selectImage={selectImage}
+                                ></ImageModal>
+                                <div>
                                     <div className="relative">
                                         <label
                                             htmlFor="date"

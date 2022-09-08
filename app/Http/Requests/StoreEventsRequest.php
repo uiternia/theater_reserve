@@ -26,7 +26,7 @@ class StoreEventsRequest extends FormRequest
         return [
             'name' => ['required', 'max:50'],
             'information' => ['required', 'max:200'],
-            'image' => 'image|mimes:jpg,jpeg,png|max:2048',
+            'image_id' => ['required'],
             'date' => ['required', 'date'],
             'start_time' => ['required'],
             'end_time' => ['required', 'after:start_time'],

@@ -18,7 +18,9 @@ return new class extends Migration
             $table->string('name');
             $table->text('information');
             $table->integer('max_people');
-            $table->string('image')->nullable();
+            $table->foreignId('image_id')
+                ->nullable()
+                ->constrained('images');
             $table->datetime('start_date');
             $table->datetime('end_date');
             $table->boolean('is_visible')->default(true);

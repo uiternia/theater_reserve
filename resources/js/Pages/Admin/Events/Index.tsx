@@ -11,16 +11,17 @@ export default function Index(props: any) {
     const showEvent = (id: number) => {
         Inertia.get(route("admin.events.show", id));
     };
+    const noImage = "/storage/images/no_image.jpg";
     return (
         <Authenticated
             auth={props.auth}
             header={
-                <h2 className="font-semibold text-xl text-gray-800 leading-tight">
-                    イベント一覧
+                <h2 className="font-mono font-medium text-xl text-gray-800 leading-tight">
+                    演目一覧
                 </h2>
             }
         >
-            <Head title="Event" />
+            <Head title="演目一覧" />
 
             <div className="py-12">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
@@ -38,32 +39,32 @@ export default function Index(props: any) {
                                     </button>
                                 </Link>
                             </div>
-                            <div className="overflow-x-auto relative shadow-md sm:rounded-lg">
-                                <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                            <div className="mx-2 sm:mx-0 overflow-x-auto relative shadow-md sm:rounded-lg">
+                                <table className="w-full   text-sm text-left text-gray-500 dark:text-gray-400">
                                     <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                                         <tr>
                                             <th
                                                 scope="col"
-                                                className="py-3 px-6"
+                                                className="py-3  sm:px-6"
                                             >
                                                 演目名
                                             </th>
                                             <th
                                                 scope="col"
-                                                className="py-3 px-6"
+                                                className="py-3 sm:px-6"
                                             >
                                                 開始時刻
                                             </th>
                                             <th
                                                 scope="col"
-                                                className="py-3 px-6"
+                                                className="py-3 sm:px-6"
                                             >
                                                 会場上限
                                             </th>
 
                                             <th
                                                 scope="col"
-                                                className="py-3 px-6"
+                                                className="py-3 sm:px-6"
                                             >
                                                 Action
                                             </th>
@@ -77,31 +78,49 @@ export default function Index(props: any) {
                                             >
                                                 <td
                                                     scope="row"
-                                                    className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                                                    className="py-4 sm:px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white"
                                                 >
                                                     {event.name}
                                                 </td>
-                                                <td className="py-4 px-6">
+                                                <td className="py-4 sm:px-6">
                                                     {/* {event.start_date} */}
                                                     {dayjs(
                                                         event.start_date
                                                     ).format("YYYY-MM-DD HH時")}
                                                 </td>
-                                                <td className="py-4 px-6">
+                                                <td className="py-4 sm:px-6">
                                                     {event.max_people}人
                                                 </td>
-                                                <td className="py-4 px-6">
-                                                    <button
-                                                        type="button"
-                                                        onClick={() =>
-                                                            showEvent(event.id)
-                                                        }
-                                                        key={event.id}
-                                                        className="text-white bg-blue-400 hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-                                                    >
-                                                        編集
-                                                        <HiOutlinePencilAlt className="w-6 h-6"></HiOutlinePencilAlt>
-                                                    </button>
+                                                <td className="py-4 sm:px-6">
+                                                    {event.image === null ? (
+                                                        <a>
+                                                            <img
+                                                                onClick={() =>
+                                                                    showEvent(
+                                                                        event.id
+                                                                    )
+                                                                }
+                                                                key={event.id}
+                                                                src={noImage}
+                                                                className="object-cover h-14 w-14 rounded-2xl "
+                                                            ></img>
+                                                        </a>
+                                                    ) : (
+                                                        <a>
+                                                            <img
+                                                                onClick={() =>
+                                                                    showEvent(
+                                                                        event.id
+                                                                    )
+                                                                }
+                                                                key={event.id}
+                                                                src={
+                                                                    event.image
+                                                                }
+                                                                className="object-cover h-14 w-14 rounded-2xl "
+                                                            ></img>
+                                                        </a>
+                                                    )}
                                                 </td>
                                             </tr>
                                         ))}

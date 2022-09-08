@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\EventController;
+use App\Http\Controllers\ImageController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -37,6 +38,8 @@ Route::prefix('admin')->name('admin.')->group(function () {
         return Inertia::render('Admin/Dashboard');
     })->middleware(['auth:admin', 'verified'])->name('dashboard');
 
+
+    Route::resource('images', ImageController::class)->middleware(['auth:admin', 'verified']);
     Route::resource('events', EventController::class)->middleware(['auth:admin', 'verified']);
 
     require __DIR__ . '/admin.php';
