@@ -69,7 +69,7 @@ export default function Login({ status, canResetPassword }: Props) {
                         type="text"
                         name="email"
                         value={data.email}
-                        className="mt-1 block w-full"
+                        className="input mt-1 input-bordered w-full"
                         autoComplete="username"
                         isFocused={true}
                         handleChange={onHandleChange}
@@ -83,7 +83,7 @@ export default function Login({ status, canResetPassword }: Props) {
                         type="password"
                         name="password"
                         value={data.password}
-                        className="mt-1 block w-full"
+                        className="input mt-1 input-bordered w-full"
                         autoComplete="current-password"
                         handleChange={onHandleChange}
                     />

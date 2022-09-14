@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Image;
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 
@@ -42,5 +43,11 @@ class Event extends Model
             ->where('events.id', $id)
             ->leftjoin('images', 'events.image_id', '=', 'images.id')
             ->select('events.*', 'images.image');
+    }
+
+    public function users()
+    {
+        return $this->belongsToMany(User::class, 'reserves')
+            ->withPivot('id', 'number_of_people', 'canceled_date', 'visit', 'price');
     }
 }

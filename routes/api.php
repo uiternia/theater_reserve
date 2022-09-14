@@ -1,8 +1,9 @@
 <?php
 
+use App\Models\Event;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Models\Image;
+use App\Models\User;
 use Illuminate\Support\Facades\DB;
 
 /*
@@ -25,4 +26,14 @@ Route::middleware('auth:admin')
         return DB::table('images')
             ->select('id', 'image')
             ->get();
+    });
+
+Route::middleware('auth:admin')
+    ->get('/searchUsers', function (Request $request) {
+        return User::searchUsers($request->search)->select('id', 'name', 'email')->get();
+    });
+
+Route::middleware('auth:admin')
+    ->get('/searchProgram', function (Request $request) {
+        return Event::where('name', $request->program)->select('id', 'name', 'start_date')->get();
     });

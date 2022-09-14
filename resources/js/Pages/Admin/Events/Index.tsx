@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Head, Link, usePage } from "@inertiajs/inertia-react";
 import Authenticated from "@/Layouts/AdminAuthenticated";
-import { HiOutlinePlusSm, HiOutlinePencilAlt } from "react-icons/hi";
+import { HiOutlinePlusSm } from "react-icons/hi";
 import { FlashMessage } from "@/Components/FlashMessage";
 import Pagination from "@/Components/Pagination";
 import dayjs from "dayjs";
@@ -39,59 +39,30 @@ export default function Index(props: any) {
                                     </button>
                                 </Link>
                             </div>
-                            <div className="mx-2 sm:mx-0 overflow-x-auto relative shadow-md sm:rounded-lg">
-                                <table className="w-full   text-sm text-left text-gray-500 dark:text-gray-400">
-                                    <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                            <div className="overflow-x-auto relative shadow-md sm:rounded-lg">
+                                <table className="table border-secondary table-zebra w-full">
+                                    <thead>
                                         <tr>
-                                            <th
-                                                scope="col"
-                                                className="py-3  sm:px-6"
-                                            >
+                                            <th className="border-secondary">
                                                 演目名
                                             </th>
-                                            <th
-                                                scope="col"
-                                                className="py-3 sm:px-6"
-                                            >
-                                                開始時刻
-                                            </th>
-                                            <th
-                                                scope="col"
-                                                className="py-3 sm:px-6"
-                                            >
-                                                会場上限
-                                            </th>
-
-                                            <th
-                                                scope="col"
-                                                className="py-3 sm:px-6"
-                                            >
-                                                Action
-                                            </th>
+                                            <th>開始時刻</th>
+                                            <th>会場上限</th>
+                                            <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         {props.events.data.map((event: any) => (
-                                            <tr
-                                                key={event.id}
-                                                className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
-                                            >
-                                                <td
-                                                    scope="row"
-                                                    className="py-4 sm:px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-                                                >
-                                                    {event.name}
-                                                </td>
-                                                <td className="py-4 sm:px-6">
-                                                    {/* {event.start_date} */}
+                                            <tr key={event.id}>
+                                                <th>{event.name}</th>
+                                                <td>
                                                     {dayjs(
                                                         event.start_date
                                                     ).format("YYYY-MM-DD HH時")}
                                                 </td>
-                                                <td className="py-4 sm:px-6">
-                                                    {event.max_people}人
-                                                </td>
-                                                <td className="py-4 sm:px-6">
+                                                <td>{event.max_people}人</td>
+                                                <td>
+                                                    {" "}
                                                     {event.image === null ? (
                                                         <a>
                                                             <img

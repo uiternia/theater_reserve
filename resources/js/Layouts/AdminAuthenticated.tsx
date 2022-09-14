@@ -50,6 +50,14 @@ export default function Authenticated({ auth, header, children }: Props) {
                                 >
                                     画像管理
                                 </NavLink>
+                                <NavLink
+                                    href={route("admin.reserves.index")}
+                                    active={route().current(
+                                        "admin.reserves.index"
+                                    )}
+                                >
+                                    予約一覧
+                                </NavLink>
                             </div>
                         </div>
 
@@ -167,6 +175,12 @@ export default function Authenticated({ auth, header, children }: Props) {
                             active={route().current("admin.images.index")}
                         >
                             画像管理
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink
+                            href={route("admin.reserves.index")}
+                            active={route().current("admin.reserves.index")}
+                        >
+                            予約一覧
                         </ResponsiveNavLink>
                     </div>
 

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreEventsRequest;
 use App\Http\Requests\UpdateEventsRequest;
 use App\Models\Event;
+use App\Models\Reserve;
 use Inertia\Inertia;
 use App\Service\EventService;
 
@@ -53,7 +54,9 @@ class EventController extends Controller
     {
         $eventShow = Event::eventImage($event->id)->first();
 
-        return Inertia::render('Admin/Events/Show', ['event' => $eventShow]);
+        $reservedPeople = Reserve::reservedPeople($event->id)->first();
+
+        return Inertia::render('Admin/Events/Show', ['event' => $eventShow, 'reservedPeople' => $reservedPeople]);
     }
 
     public function edit(Event $event)

@@ -68,7 +68,7 @@ export default function Show(props: any) {
                                             >
                                                 イベント予定時刻
                                             </label>
-                                            <p className="date text-gray-600">
+                                            <p className="date mb-3 text-gray-600">
                                                 {dayjs(
                                                     props.event.start_date
                                                 ).format("YYYY-MM-DD HH時")}
@@ -77,6 +77,42 @@ export default function Show(props: any) {
                                                     props.event.end_date
                                                 ).format("HH時")}
                                             </p>
+                                            <div className="flex justify-start">
+                                                <div className="mr-8">
+                                                    <label
+                                                        htmlFor="date"
+                                                        className="text-sm font-medium text-gray-500 dark:text-gray-300"
+                                                    >
+                                                        会場上限
+                                                    </label>
+                                                    <p className="date text-gray-600">
+                                                        {props.event.max_people}
+                                                        人
+                                                    </p>
+                                                </div>
+                                                <div>
+                                                    <label
+                                                        htmlFor="date"
+                                                        className="text-sm font-medium text-gray-500 dark:text-gray-300"
+                                                    >
+                                                        現予約人数
+                                                    </label>
+                                                    {props.reservedPeople
+                                                        .number_of_people ===
+                                                    !null ? (
+                                                        <p className="date text-gray-600">
+                                                            {
+                                                                props
+                                                                    .reservedPeople
+                                                                    .number_of_people
+                                                            }
+                                                            人
+                                                        </p>
+                                                    ) : (
+                                                        <p>0人</p>
+                                                    )}
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>

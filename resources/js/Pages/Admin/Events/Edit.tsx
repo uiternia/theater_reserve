@@ -17,7 +17,6 @@ export default function Edit(props: any) {
     const [propsImage, setPropsImage] = useState("");
     const [initialImage, setInitialImage] = useState(true);
     useEffect(() => {
-        console.log(props.event);
         setPropsImage(props.event.image);
     });
     //formメソッド
@@ -28,7 +27,7 @@ export default function Edit(props: any) {
         image_id: props.event.image_id,
     });
 
-    const selectImage = (i: Image) => {
+    const selectImageEmit = (i: Image) => {
         setInitialImage(false);
         setData("image_id", i.id);
     };
@@ -127,7 +126,7 @@ export default function Edit(props: any) {
                                     </label>
                                 </div>
                                 <ImageModal
-                                    selectImage={selectImage}
+                                    selectImageEmit={selectImageEmit}
                                 ></ImageModal>
 
                                 {props.event.image === null && initialImage ? (

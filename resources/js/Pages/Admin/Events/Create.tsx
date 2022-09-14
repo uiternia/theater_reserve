@@ -43,7 +43,7 @@ export default function Create(props: any) {
     };
 
     //関数をImageModal.tsxに渡しそれを子側で渡し受け取る関数
-    const selectImage = (i: Image) => {
+    const selectImageEmit = (i: Image) => {
         console.log(i);
         setData("image_id", i.id);
     };
@@ -142,7 +142,7 @@ export default function Create(props: any) {
                                     </label>
                                 </div>
                                 <ImageModal
-                                    selectImage={selectImage}
+                                    selectImageEmit={selectImageEmit}
                                 ></ImageModal>
                                 <div>
                                     <div className="relative">
