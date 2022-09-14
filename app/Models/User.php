@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use App\Models\Event;
 
 class User extends Authenticatable
 {
@@ -41,4 +42,22 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function events()
+    {
+        return $this->belongsToMany(Event::class, 'reserves')
+            ->withPivot('id', 'number_of_people', 'canceled_date', 'visit', 'price', 'introduction');
+    }
+
+    public function scopeSearchUsers($query, $input = null)
+    {
+        if (!empty($input)) {
+            if (User::where('name', 'like', $input . '%')
+                ->orWhere('email', 'like', $input . '%')->exists()
+            ) {
+                return $query->where('name', 'like', $input . '%')
+                    ->orWhere('email', 'like', $input . '%');
+            }
+        }
+    }
 }

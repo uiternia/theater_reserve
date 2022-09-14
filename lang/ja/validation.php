@@ -156,6 +156,11 @@ return [
   'attributes' => [
     'email' => 'メールアドレス',
     'password' => 'パスワード',
+    'image' => 'イベント画像',
+    'event_id' => 'イベント',
+    'user_id' => 'ユーザー',
+    'number_of_people' => '予約人数',
+    'introduction' => '紹介情報',
   ],
 
 ];

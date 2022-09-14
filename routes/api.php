@@ -1,7 +1,10 @@
 <?php
 
+use App\Models\Event;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Models\User;
+use Illuminate\Support\Facades\DB;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,3 +20,20 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::middleware('auth:admin')
+    ->get('/imagesAll', function (Request $request) {
+        return DB::table('images')
+            ->select('id', 'image')
+            ->get();
+    });
+
+Route::middleware('auth:admin')
+    ->get('/searchUsers', function (Request $request) {
+        return User::searchUsers($request->search)->select('id', 'name', 'email')->get();
+    });
+
+Route::middleware('auth:admin')
+    ->get('/searchProgram', function (Request $request) {
+        return Event::where('name', $request->program)->select('id', 'name', 'start_date')->get();
+    });

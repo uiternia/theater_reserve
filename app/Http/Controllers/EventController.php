@@ -5,81 +5,78 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreEventsRequest;
 use App\Http\Requests\UpdateEventsRequest;
 use App\Models\Event;
+use App\Models\Reserve;
 use Inertia\Inertia;
+use App\Service\EventService;
 
 class EventController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index()
     {
-        return Inertia::render('Admin/Events/Index');
+        $events = Event::eventAll()->paginate(50);
+
+        return Inertia::render('Admin/Events/Index', ['events' => $events]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function create()
     {
         return Inertia::render('Admin/Events/Create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \App\Http\Requests\StoreEventsRequest  $request
-     * @return \Illuminate\Http\Response
-     */
+
     public function store(StoreEventsRequest $request)
     {
-        //
+        //イベントが重複しないかのチェック
+        $check = EventService::checkDuplication($request['date'], $request['start_time'], $request['end_time']);
+
+        if ($check) {
+            return Inertia::render('Admin/Events/Create')->with($request->session()->flash('error', 'この時間帯は既にイベントが存在します。'));
+        }
+
+        //年月と日時の結合
+        $startDate = EventService::joinDateAndTime($request['date'], $request['start_time']);
+        $endDate = EventService::joinDateAndTime($request['date'], $request['end_time']);
+
+        Event::create([
+            'name' => $request['name'],
+            'information' => $request['information'],
+            'image_id' => $request->image_id,
+            'start_date' => $startDate,
+            'end_date' => $endDate,
+            'max_people' => $request['max_people'],
+        ]);
+        return to_route('admin.events.index')->with($request->session()->flash('message', 'イベントの作成が完了しました'));
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Events  $events
-     * @return \Illuminate\Http\Response
-     */
     public function show(Event $event)
     {
-        //
+        $eventShow = Event::eventImage($event->id)->first();
+
+        $reservedPeople = Reserve::reservedPeople($event->id)->first();
+
+        return Inertia::render('Admin/Events/Show', ['event' => $eventShow, 'reservedPeople' => $reservedPeople]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Events  $events
-     * @return \Illuminate\Http\Response
-     */
     public function edit(Event $event)
     {
-        //
+        $eventShow = Event::eventImage($event->id)->first();
+
+        return Inertia::render('Admin/Events/Edit', ['event' => $eventShow]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \App\Http\Requests\UpdateEventsRequest  $request
-     * @param  \App\Models\Events  $events
-     * @return \Illuminate\Http\Response
-     */
-    public function update(UpdateEventsRequest $request, Event $events)
+    public function update(UpdateEventsRequest $request, Event $event)
     {
-        //
+        $event->name = $request->name;
+        $event->information = $request->information;
+        $event->max_people = $request->max_people;
+        $event->image_id = $request->image_id;
+        $event->save();
+        return to_route('admin.events.index')->with($request->session()->flash('message', 'イベントを編集しました。'));
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Events  $events
-     * @return \Illuminate\Http\Response
-     */
+
     public function destroy(Event $events)
     {
         //
