@@ -2,7 +2,8 @@
 
 git clone https://github.com/uiternia/theater_reserve.git
 
-###　インストール方法
+
+##　インストール方法
 
 - cd クローンしたプロジェクト
 
@@ -48,14 +49,17 @@ vendor ディレクトリはリポジトリに含まれていないので、パ�
 
 - public/images内の3点の画像をそれぞれ storage/app/public/images内に配置をお願いします。
 
-###　動作確認
+
+
+##動作確認
 - http://localhost/  -> アプリ
 
 - http://localhost:8025/  -> MailHog
 
 - http://localhost:8080/  ->phpMyAdmin(データベース) ユーザー:root パスワード:pass
 
-### 補足
+
+## 補足
 新規予約,予約情報更新,予約キャンセルの機能に関してそれぞれメール機能の実装をしています。
 またメール処理には時間がかかるので、 キューを使用しています。
 ./vendor/bin/sail artisan queue:workで ワーカーを立ち上げを動作確認お願いします。
