@@ -24,6 +24,7 @@ MAIL_FROM_NAME="${APP_NAME}"
 QUEUE_CONNECTION=database
 
 vendor ディレクトリはリポジトリに含まれていないので、パッケージをインストールします。手元のPCにPHPやComposerがインストールされていればそれを利用することもできますが、ここでは、Laravel Sailのセットアップスクリプトでも利用されているDockerイメージを利用してインストールします。
+以下の順でコマンドの実行をお願いします。
 
 - docker run --rm \
     -u "$(id -u):$(id -g)" \

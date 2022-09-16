@@ -43,7 +43,7 @@ export default function EventSearchModal(props: any) {
             <div className="flex justify-center items-center form-control mb-10">
                 <div>
                     <label className="label">
-                        <span className="label-text">顧客検索</span>
+                        <span className="label-text">演目検索</span>
                     </label>
 
                     <select

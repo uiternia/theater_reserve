@@ -17,7 +17,7 @@ class EventsSeeder extends Seeder
     {
         DB::table('events')->insert([
             [
-                'name' => '劇団ひとり',
+                'name' => 'デリシャス',
                 'information' => 'テスト説明です。テスト説明です。テスト説明です。テスト説明です。テスト説明です。テスト説明です。テスト説明です。テスト説明です。',
                 'max_people' => 500,
                 'image_id' => 1,
@@ -26,7 +26,7 @@ class EventsSeeder extends Seeder
                 'is_visible' => true
             ],
             [
-                'name' => '劇団ひとり',
+                'name' => 'デリシャス',
                 'information' => 'テスト説明です。テスト説明です。テスト説明です。テスト説明です。テスト説明です。テスト説明です。テスト説明です。テスト説明です。',
                 'max_people' => 500,
                 'image_id' => 1,
@@ -35,7 +35,7 @@ class EventsSeeder extends Seeder
                 'is_visible' => true
             ],
             [
-                'name' => '劇団ふたり',
+                'name' => 'エクセレント',
                 'information' => 'テスト説明です。テスト説明です。テスト説明です。テスト説明です。テスト説明です。テスト説明です。テスト説明です。テスト説明です。',
                 'max_people' => 500,
                 'image_id' => 1,
@@ -44,7 +44,7 @@ class EventsSeeder extends Seeder
                 'is_visible' => true
             ],
             [
-                'name' => '劇団ふたり',
+                'name' => 'エクセレント',
                 'information' => 'テスト説明です。テスト説明です。テスト説明です。テスト説明です。テスト説明です。テスト説明です。テスト説明です。テスト説明です。',
                 'max_people' => 500,
                 'image_id' => 1,
@@ -53,7 +53,7 @@ class EventsSeeder extends Seeder
                 'is_visible' => true
             ],
             [
-                'name' => '劇団ふたり',
+                'name' => 'エクセレント',
                 'information' => 'テスト説明です。テスト説明です。テスト説明です。テスト説明です。テスト説明です。テスト説明です。テスト説明です。テスト説明です。',
                 'max_people' => 500,
                 'image_id' => 1,
@@ -62,7 +62,7 @@ class EventsSeeder extends Seeder
                 'is_visible' => true
             ],
             [
-                'name' => '劇団さんにん',
+                'name' => 'アメイジング',
                 'information' => 'テスト説明です。テスト説明です。テスト説明です。テスト説明です。テスト説明です。テスト説明です。テスト説明です。テスト説明です。',
                 'max_people' => 500,
                 'image_id' => 1,
@@ -71,7 +71,7 @@ class EventsSeeder extends Seeder
                 'is_visible' => true
             ],
             [
-                'name' => '劇団さんにん',
+                'name' => 'アメイジング',
                 'information' => 'テスト説明です。テスト説明です。テスト説明です。テスト説明です。テスト説明です。テスト説明です。テスト説明です。テスト説明です。',
                 'max_people' => 500,
                 'image_id' => 1,
@@ -80,7 +80,7 @@ class EventsSeeder extends Seeder
                 'is_visible' => true
             ],
             [
-                'name' => '劇団さんにん',
+                'name' => 'アメイジング',
                 'information' => 'テスト説明です。テスト説明です。テスト説明です。テスト説明です。テスト説明です。テスト説明です。テスト説明です。テスト説明です。',
                 'max_people' => 500,
                 'image_id' => 1,
