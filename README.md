@@ -2,7 +2,7 @@
 
 git clone https://github.com/uiternia/theater_reserve.git
 
-##　インストール方法
+##インストール方法
 
 - cd クローンしたプロジェクト
 
