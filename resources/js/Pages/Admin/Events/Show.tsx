@@ -6,6 +6,7 @@ import { HiOutlinePencilAlt } from "react-icons/hi";
 import { Inertia } from "@inertiajs/inertia";
 
 export default function Show(props: any) {
+    useEffect(() => {});
     const editEvent = (id: number) => {
         Inertia.get(route("admin.events.edit", id));
     };
@@ -97,9 +98,10 @@ export default function Show(props: any) {
                                                     >
                                                         現予約人数
                                                     </label>
-                                                    {props.reservedPeople
-                                                        .number_of_people ===
-                                                    !null ? (
+                                                    {props.reservedPeople ===
+                                                    null ? (
+                                                        <p>０人</p>
+                                                    ) : (
                                                         <p className="date text-gray-600">
                                                             {
                                                                 props
@@ -108,8 +110,6 @@ export default function Show(props: any) {
                                                             }
                                                             人
                                                         </p>
-                                                    ) : (
-                                                        <p>0人</p>
                                                     )}
                                                 </div>
                                             </div>
