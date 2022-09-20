@@ -8,7 +8,7 @@ git clone https://github.com/uiternia/theater_reserve.git
 
 - cp .env.example .env
 
-.envファイルを下記に変更
+.envファイルの下記の部分の変更
 - APP_URL=http://localhost
 - DB_HOST=mysql
 - DB_USERNAME=root

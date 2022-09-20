@@ -33,7 +33,7 @@ export default function Edit(props: any) {
             auth={props.auth}
             header={
                 <h2 className="font-mono font-medium text-xl text-gray-800 leading-tight">
-                    お客様イベント予約
+                    {props.reserve.name}様イベント編集
                 </h2>
             }
         >
