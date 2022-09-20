@@ -11,7 +11,7 @@ class AnalysisService
     $query =  $subQuery->where('visit', true)
       ->groupBy('id')
       ->selectRaw('id,sum(subtotal) as totalPurchase, 
-              DATE_FORMAT(start_date,"%Y%m%d") as date');
+              DATE_FORMAT(start_date,"%Y/%m/%d") as date');
 
     $data =  DB::table($query)
       ->groupBy('date')
@@ -28,7 +28,7 @@ class AnalysisService
   {
     $query =  $subQuery->where('visit', true)
       ->groupBy('id')->selectRaw('id,sum(subtotal) as totalPurchase, 
-              DATE_FORMAT(start_date,"%Y%m") as date');
+              DATE_FORMAT(start_date,"%Y/%m") as date');
 
     $data =  DB::table($query)
       ->groupBy('date')

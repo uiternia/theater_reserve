@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\ImageController;
+use App\Http\Controllers\VisitController;
 use App\Http\Controllers\ReserveController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -44,6 +45,10 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::resource('images', ImageController::class)->middleware(['auth:admin', 'verified']);
     Route::resource('events', EventController::class)->middleware(['auth:admin', 'verified']);
     Route::resource('reserves', ReserveController::class)->middleware(['auth:admin', 'verified']);
+
+    Route::get('visit', [VisitController::class, 'index'])->middleware(['auth:admin', 'verified'])->name('visit.index');
+    Route::get('visit/true/{id}', [VisitController::class, 'true'])->middleware(['auth:admin', 'verified'])->name('visit.true');
+    Route::get('visit/false/{id}', [VisitController::class, 'false'])->middleware(['auth:admin', 'verified'])->name('visit.false');
 
     require __DIR__ . '/admin.php';
 });

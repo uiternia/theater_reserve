@@ -6,11 +6,6 @@ import ValidationErrors from "@/Components/ValidationErrors";
 import axios from "axios";
 import Chart from "@/Components/Chart";
 
-interface Data {
-    date: string;
-    total: number;
-}
-
 interface Date {
     date: string;
 }
@@ -31,9 +26,9 @@ export default function Dashboard(props: any) {
         type: "perDay",
     });
 
-    const [earning, setEarnig] = useState<Array<Data>>([]);
     const [labels, setLabels] = useState<Array<Date>>([]);
     const [totals, setTotals] = useState<Array<Total>>([]);
+    //分析が他にも必要な場合に使用_@
     const [types, setTypes] = useState("");
 
     const onSubmit = async (e: any) => {
@@ -48,12 +43,10 @@ export default function Dashboard(props: any) {
                     },
                 })
                 .then((res) => {
-                    setEarnig(res.data.data);
                     setLabels(res.data.labels);
                     setTotals(res.data.totals);
                     setTypes(res.data.type);
                 });
-            console.log(earning);
         } catch (e) {
             console.log(e);
         }
@@ -181,7 +174,7 @@ export default function Dashboard(props: any) {
                                     </button>
                                 </div>
                             </form>
-                            {earning.length === 0 ? (
+                            {totals.length === 0 ? (
                                 <></>
                             ) : (
                                 <Chart data={totals} labels={labels} />
