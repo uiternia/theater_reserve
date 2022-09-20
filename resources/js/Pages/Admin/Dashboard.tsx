@@ -3,13 +3,15 @@ import { Head, Link, useForm, usePage } from "@inertiajs/inertia-react";
 import Authenticated from "@/Layouts/AdminAuthenticated";
 import { getToday, timeSelect } from "@/Common/Time";
 import ValidationErrors from "@/Components/ValidationErrors";
-import { HiOutlinePlusSm } from "react-icons/hi";
-import { FlashMessage } from "@/Components/FlashMessage";
 import axios from "axios";
+import Chart from "@/Components/Chart";
 
-interface Data {
+interface Date {
     date: string;
-    total: number;
+}
+
+interface Total {
+    date: number;
 }
 
 export default function Dashboard(props: any) {
@@ -24,16 +26,16 @@ export default function Dashboard(props: any) {
         type: "perDay",
     });
 
-    const [earning, setEarnig] = useState<Array<Data>>([]);
-    const [labels, setLabels] = useState("");
-    const [totals, setTotals] = useState(0);
+    const [labels, setLabels] = useState<Array<Date>>([]);
+    const [totals, setTotals] = useState<Array<Total>>([]);
+    //分析が他にも必要な場合に使用_@
     const [types, setTypes] = useState("");
 
     const onSubmit = async (e: any) => {
         e.preventDefault();
         try {
             await axios
-                .get("/api/earnings/", {
+                .get("/api/analysis/", {
                     params: {
                         startDate: data.start,
                         endDate: data.end,
@@ -41,11 +43,9 @@ export default function Dashboard(props: any) {
                     },
                 })
                 .then((res) => {
-                    setEarnig(res.data.data);
                     setLabels(res.data.labels);
                     setTotals(res.data.totals);
                     setTypes(res.data.type);
-                    console.log(res.data);
                 });
         } catch (e) {
             console.log(e);
@@ -174,6 +174,11 @@ export default function Dashboard(props: any) {
                                     </button>
                                 </div>
                             </form>
+                            {totals.length === 0 ? (
+                                <></>
+                            ) : (
+                                <Chart data={totals} labels={labels} />
+                            )}
                         </div>
                     </div>
                 </div>

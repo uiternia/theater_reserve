@@ -58,6 +58,14 @@ export default function Authenticated({ auth, header, children }: Props) {
                                 >
                                     予約一覧
                                 </NavLink>
+                                <NavLink
+                                    href={route("admin.visit.index")}
+                                    active={route().current(
+                                        "admin.visit.index"
+                                    )}
+                                >
+                                    当日予約管理
+                                </NavLink>
                             </div>
                         </div>
 
@@ -181,6 +189,12 @@ export default function Authenticated({ auth, header, children }: Props) {
                             active={route().current("admin.reserves.index")}
                         >
                             予約一覧
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink
+                            href={route("admin.visit.index")}
+                            active={route().current("admin.visit.index")}
+                        >
+                            当日予約管理
                         </ResponsiveNavLink>
                     </div>
 

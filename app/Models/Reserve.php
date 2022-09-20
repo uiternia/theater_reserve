@@ -58,4 +58,28 @@ class Reserve extends Model
             ->groupBy('event_id')
             ->having('event_id', $id);
     }
+
+    public function scopeTodayVisitPeople($query)
+    {
+        $today = Carbon::today();
+
+        //selectはUser情報だけにします。
+        return $query = DB::table('reserves')->rightjoin('events', 'reserves.event_id', '=', 'events.id')
+            ->rightjoin('users', 'reserves.user_id', '=', 'users.id')
+            ->whereNull('reserves.canceled_date')
+            ->whereDate('events.start_date', '=', $today)->where('visit', '=', true)->orderBy('events.start_date', 'asc')
+            ->select('reserves.*', 'events.start_date', 'events.name as e_name', 'users.name', 'users.email', 'introduction');
+    }
+
+    public function scopeTodayVisitedPeople($query)
+    {
+        $today = Carbon::today();
+
+        //selectはUser情報だけにします。
+        return $query = DB::table('reserves')->rightjoin('events', 'reserves.event_id', '=', 'events.id')
+            ->rightjoin('users', 'reserves.user_id', '=', 'users.id')
+            ->whereNull('reserves.canceled_date')
+            ->whereDate('events.start_date', '=', $today)->where('visit', '=', false)->orderBy('events.start_date', 'asc')
+            ->select('reserves.*', 'events.start_date', 'events.name as e_name', 'users.name', 'users.email', 'introduction');
+    }
 }

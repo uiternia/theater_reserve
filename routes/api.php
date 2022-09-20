@@ -4,6 +4,7 @@ use App\Models\Event;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Models\User;
+use App\Http\Controllers\Api\AnalysisController;
 use Illuminate\Support\Facades\DB;
 
 /*
@@ -27,6 +28,10 @@ Route::middleware('auth:admin')
             ->select('id', 'image')
             ->get();
     });
+
+Route::middleware('auth:admin')
+    ->get('/analysis', [AnalysisController::class, 'index'])
+    ->name('api.analysis');
 
 Route::middleware('auth:admin')
     ->get('/searchUsers', function (Request $request) {
